@@ -99,6 +99,7 @@ public class CarView extends JFrame{
         // TODO: Create more for each component as necessary
 
         gasButton.addActionListener(e -> carC.gas(gasAmount));
+        brakeButton.addActionListener(e -> carC.brake(gasAmount));
 
         stopButton.addActionListener(e -> carC.stop());
 
