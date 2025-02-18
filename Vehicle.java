@@ -105,8 +105,8 @@ public abstract class Vehicle implements Movable {
 
         double directionAngleRadians = Math.toRadians(directionAngle);
 
-        movementX = Math.cos(directionAngleRadians) * speedFactor();
-        movementY = Math.sin(directionAngleRadians) * speedFactor();
+        movementX = Math.cos(directionAngleRadians) * currentSpeed;
+        movementY = Math.sin(directionAngleRadians) * currentSpeed;
 
         xPosition += movementX;
         yPosition += movementY;
