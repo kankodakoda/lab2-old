@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class CarController {
     // member fields:
-
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -21,8 +20,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
-
+    ArrayList<Vehicle> cars = new ArrayList<>();
     //methods:
 
     public static void main(String[] args) {
@@ -45,10 +43,16 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
+            for (Vehicle car : cars) {
                 car.move();
                 int x = (int) Math.round(car.getXPosition());
                 int y = (int) Math.round(car.getYPosition());
+                // Kontrollera om bilen nuddar rutan
+                if (x <= 0 || x >= frameWidth - 100 || y <= 0 || y >= frameHeight - 300) {
+                    car.stopEngine();
+                    car.turnLeft(180); // Invertera riktning
+                    car.startEngine();
+                }
                 frame.drawPanel.moveit(x, y, car);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
@@ -59,18 +63,24 @@ public class CarController {
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Car car : cars) {
+        for (Vehicle car : cars) {
             car.gas(gas);
+        }
+    }
+    void brake(int amount) {
+        double brake = ((double) amount) / 100;
+        for (Vehicle car : cars) {
+            car.brake(brake);
         }
     }
 
     void start() {
-        for (Car car : cars) {
+        for (Vehicle car : cars) {
             car.startEngine();
         }
     }
     void stop() {
-        for (Car car : cars) {
+        for (Vehicle car : cars) {
             car.stopEngine();
         }
     }
